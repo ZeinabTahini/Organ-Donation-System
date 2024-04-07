@@ -6,13 +6,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email']; 
     $password = $_POST['password'];
 
-    $sql_add_query = "INSERT INTO add_donor (username, email, password) 
+    $sql_add_query = "INSERT INTO add_patient (username, email, password) 
                       VALUES ('$username','$email','$password')";
 
     $result = mysqli_query($con, $sql_add_query);
 
     if ($result) {
-        header("location:../donor/registration-alert.php");
+        header("location:../patient/registration-alert.php");
         exit(); // exit script after redirection
     } else {
         $error_message = "Error: " . $sql_add_query . "<br>" . mysqli_error($con);
