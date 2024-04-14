@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+     <title> Organ Donor | Login-Error </title>
+	  <!-- Favicon -->
+   
 	<style>
 	.three {
              background: linear-gradient(45deg, #131086, #b621f3);
@@ -55,7 +57,7 @@ Please enter your email and password correctly.</p>
             </div>
         </div>
         <div class="login-right">
-          
+           
         </div>
     </div>
 </body>

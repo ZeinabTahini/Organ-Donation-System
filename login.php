@@ -5,27 +5,21 @@ require_once 'conx.php';
 if (isset($_POST['email']) && isset($_POST['password'])){
     $email=$_POST['email'];
     $password=$_POST['password'];
-    $query="select * from add_hospital WHERE email='".$email."' AND password='".$password."' AND status=1";
+    $query="select * from admin where email='".$email."' AND password='".$password."'";
     
     $result= mysqli_query($con,$query);
     
     if(mysqli_num_rows($result)===1){
        $_SESSION['is_logged_in']=1;
         $email=$_POST['email'];
-        $row= mysqli_fetch_array($result);
-        $hid = $row['hid'];
-        $_SESSION['hid']=$hid;
-        header("location:details.php");
-        echo '<script>alert("Welcome to Organ Donor!")</script>';
+        header("location:hospital-apps.php");
     }
     else{
         $_SESSION['is_logged_in']=0;
         header("location:login-error-alert.php") ;
-        echo '<script>alert("You Are Not Logged in.")</script>';
 }
 }
     else{
-         echo '<script>alert("You Are Not Logged in.")</script>';
         header("location:login-error-alert.php");
     }
 
