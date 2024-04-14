@@ -5,7 +5,7 @@ require_once 'conx.php';
 if (isset($_POST['email']) && isset($_POST['password'])){
     $email=$_POST['email'];
     $password=$_POST['password'];
-    $query="select * from add_patient where email='".$email."' AND password='".$password."'";
+    $query="select * from add_hospital WHERE email='".$email."' AND password='".$password."' AND status=1";
     
     $result= mysqli_query($con,$query);
     
@@ -13,9 +13,10 @@ if (isset($_POST['email']) && isset($_POST['password'])){
        $_SESSION['is_logged_in']=1;
         $email=$_POST['email'];
         $row= mysqli_fetch_array($result);
-        $pid = $row['pid'];
-        header("location:patient-info.php?pid=$pid");
-        echo '<script>alert("Welcome to DonateHope!")</script>';
+        $hid = $row['hid'];
+        $_SESSION['hid']=$hid;
+        header("location:details.php");
+        echo '<script>alert("Welcome to Organ Donor!")</script>';
     }
     else{
         $_SESSION['is_logged_in']=0;

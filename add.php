@@ -2,22 +2,35 @@
 include_once 'conx.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $email = $_POST['email']; 
-    $password = $_POST['password'];
+    // Check if file upload is successful
+    if(isset($_FILES['info']) && $_FILES['info']['error'] === UPLOAD_ERR_OK) {
+        $username = $_POST['username'];
+        $email = $_POST['email']; 
+        $password = $_POST['password'];
+        $info = $_FILES['info']['name'];
+        $infoTmp = $_FILES['info']['tmp_name'];
+        move_uploaded_file($infoTmp,"../admin/Info/".$info);
 
-    $sql_add_query = "INSERT INTO add_patient (username, email, password) 
-                      VALUES ('$username','$email','$password')";
+        $stts = 0;
 
-    $result = mysqli_query($con, $sql_add_query);
+        // Insert data into database
+        $sql_add_query = "INSERT INTO add_hospital (username, email, password, info, status) 
+                          VALUES ('$username', '$email', '$password', '$info', $stts)";
 
-    if ($result) {
-        header("location:../patient/registration-alert.php");
-        exit(); // exit script after redirection
+        $result = mysqli_query($con, $sql_add_query);
+
+        if ($result) {
+            header("location:../hospital/registration-alert.php");
+            exit(); // exit script after redirection
+        } else {
+            $error_message = "Error: " . $sql_add_query . "<br>" . mysqli_error($con);
+            error_log($error_message); // Log the error message
+            echo $error_message; // Output the error message for debugging purposes
+        }
     } else {
-        $error_message = "Error: " . $sql_add_query . "<br>" . mysqli_error($con);
-        error_log($error_message); // Log the error message
-        echo $error_message; // Output the error message for debugging purposes
+        // File upload failed or info index not found
+        echo "File upload failed or info index not found!";
+        exit;
     }
 } else {
     echo "Invalid request method!";

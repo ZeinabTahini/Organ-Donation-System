@@ -5,12 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Organ Donor | Login-Error</title>
-	  <!-- image-->
-    
+    <title>Login Page</title>
 	<style>
 	.three {
-            background-color: red;
+             background: linear-gradient(45deg, #131086, #b621f3);
             color: white;
             border: none;
             border-radius: 50px;
@@ -42,7 +40,8 @@
     <div class="container">
         <div class="login-left">
             <div class="login-header" >
-                   <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
+                    <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
+
             </div>
 			<div class="message login-form" autocomplete="off">
                 <p>Wrong email or password! </br>
@@ -56,7 +55,7 @@ Please enter your email and password correctly.</p>
             </div>
         </div>
         <div class="login-right">
-            <!-- image -->
+          
         </div>
     </div>
 </body>
