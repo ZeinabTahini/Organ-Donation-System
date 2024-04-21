@@ -1,5 +1,6 @@
 <?php
 include_once 'conx.php';
+
 $hid = $_POST['hid'];     
 $did = $_POST['did'];
 $donor_name = $_POST['donor_name'];
@@ -12,9 +13,13 @@ $phone = $_POST['phone'];
 $donate_organ = $_POST['donate_organ']; 
 $causesofDeath = $_POST['causesofDeath'];
 
-$result0 = mysqli_query($con,"SELECT * FROM donor WHERE did='" . $_GET['did'] . "'");
-$row0= mysqli_fetch_array($result0);
-$did = $row0['did'];
+// Check if the did already exists in the database
+$sql_check_did = "SELECT * FROM donor_details WHERE did='$did'";
+$result_check_did = mysqli_query($con, $sql_check_did);
+if (mysqli_num_rows($result_check_did) > 0) {
+    echo "<script>alert('Donor with the same ID already exists.'); window.location.href = 'donor-info.php?did=$did';</script>";
+    exit; // Stop further execution
+}
 
 $status = 0;
 
