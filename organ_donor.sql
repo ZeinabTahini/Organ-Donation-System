@@ -104,10 +104,10 @@ CREATE TABLE `patient` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `patien_details`
+-- Table structure for table `patient_details`
 --
 
-CREATE TABLE `patien_details` (
+CREATE TABLE `patient_details` (
   `pid` int(11) NOT NULL,
   `patient_name` varchar(100) NOT NULL,
   `age` int(11) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `patien_details` (
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
   `needed_organ` varchar(100) NOT NULL,
-  `timeRequired` time NOT NULL,
+  `timeRequired` date NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
