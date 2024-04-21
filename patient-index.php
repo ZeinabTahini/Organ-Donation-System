@@ -8,7 +8,7 @@
     
      <title> Organ Donor | Patient-Login </title>
 	  <!-- Favicon -->
-   
+    
 	
 </head>
 
@@ -38,7 +38,7 @@
                 </div>
         </div>
         <div class="login-right">
-          
+            
         </div>
     </div>
 </body>

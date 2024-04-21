@@ -22,6 +22,14 @@ if ($timeRequiredTimestamp < $currentDateTimestamp) {
     exit; // Stop further execution
 }
 
+// Check if the pid already exists in the database
+$sql_check_pid = "SELECT * FROM patient_details WHERE pid='$pid'";
+$result_check_pid = mysqli_query($con, $sql_check_pid);
+if (mysqli_num_rows($result_check_pid) > 0) {
+    echo "<script>alert('Patient with the same ID already exists.'); window.location.href = 'patient-info.php?pid=$pid';</script>";
+    exit; // Stop further execution
+}
+
 $sql_add_query = "INSERT INTO patient_details (pid, patient_name, age, gender, address, blood_group, email, phone, needed_organ, timeRequired, status)
 VALUES ('$pid','$patient_name','$age','$gender','$address', '$blood_group', '$email','$phone','$needed_organ','$timeRequired','$status')";
 

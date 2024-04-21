@@ -19,6 +19,8 @@ $row0 = mysqli_fetch_array($result0);
      <title> Organ Donor | Patient-Info</title>
 	  <!-- Favicon -->
     
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
