@@ -11,10 +11,7 @@ include_once 'conx.php';
         <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
          <title> Organ Donor | Admin-Hospital-apps</title>
 	  <!-- Favicon -->
-    
-        <!---Boxicons CSS-->
-       
-        />
+   
 
     </head>
 
@@ -27,6 +24,18 @@ include_once 'conx.php';
                 </div>
                 <div class="menu-bar">
                     <div class="menu">
+					<li class="menu-link">
+                            <a href="Donor-Details.php">
+                                 <i class="fa-solid fa-hand-holding-medical"></i>
+                                <span class="text">Donor Details</span>
+                            </a>
+                        </li>
+                        <li class="menu-link">
+                            <a href="Patient-Details.php">
+                                <i class="fa-solid fa-hospital-user"></i>
+                                <span class="text">Patient Details</span>
+                            </a>
+							</li>
 						<li class="menu-link">
                             <a href="hospital-apps.php" class="active">
                                 <i class="fa-regular fa-bell"></i>
@@ -72,7 +81,7 @@ include_once 'conx.php';
                             </thead>
                             <tbody>
                             <?php 
-                            $result = mysqli_query($con,"SELECT * FROM add_hospital where status = '0'");
+                            $result = mysqli_query($con,"SELECT * FROM hospital where status = '0'");
                             if(mysqli_num_rows($result)>0){
                               $i=1;
                                 while($row = mysqli_fetch_array($result)){ 
@@ -102,6 +111,6 @@ include_once 'conx.php';
             </div>
         </div>
     </body>
-   
+    
 
     </html>

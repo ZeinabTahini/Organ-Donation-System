@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
      <title> Organ Donor | Hospital-Login </title>
 	  <!-- Favicon -->
-   
+ 
 	
 </head>
 
@@ -18,7 +19,7 @@
             <div class="login-header">
                     <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
 
-                <p>Please log in to your account and begin your treatment process.</p>
+                <p>Please log in to your account to begin accessing your patients and donors.</p>
             </div>
             <form id="formAuthentication" class="login-form" autocomplete="off" action="login.php" method="POST">
                 <div class="login-form-content">
@@ -38,7 +39,7 @@
                 </div>
         </div>
         <div class="login-right">
-            
+           
         </div>
     </div>
 </body>

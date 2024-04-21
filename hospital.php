@@ -1,7 +1,7 @@
 <?php
 include_once 'conx.php';
-$result = mysqli_query($con,"SELECT * FROM add_hospital WHERE status=1");
-$result1 = mysqli_query($con, "SELECT * FROM add_hospital WHERE status='0'");
+$result = mysqli_query($con,"SELECT * FROM hospital WHERE status=1");
+$result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
 ?>
 
     <!DOCTYPE html>
@@ -14,8 +14,6 @@ $result1 = mysqli_query($con, "SELECT * FROM add_hospital WHERE status='0'");
          <title> Organ Donor | Admin-Hospital</title>
 	  <!-- Favicon -->
     
-        <!---Boxicons CSS-->
-        
 
     </head>
 
@@ -28,6 +26,18 @@ $result1 = mysqli_query($con, "SELECT * FROM add_hospital WHERE status='0'");
                 </div>
                 <div class="menu-bar">
                     <div class="menu">
+					<li class="menu-link">
+                            <a href="Donor-Details.php">
+                                 <i class="fa-solid fa-hand-holding-medical"></i>
+                                <span class="text">Donor Details</span>
+                            </a>
+                        </li>
+                        <li class="menu-link">
+                            <a href="Patient-Details.php">
+                                <i class="fa-solid fa-hospital-user"></i>
+                                <span class="text">Patient Details</span>
+                            </a>
+							</li>
 						<li class="menu-link">
                     <a href="hospital-apps.php">
                        <i class="fa-regular fa-bell"></i>
@@ -110,6 +120,6 @@ $result1 = mysqli_query($con, "SELECT * FROM add_hospital WHERE status='0'");
             </div>
         </div>
     </body>
-    
+   
 
     </html>

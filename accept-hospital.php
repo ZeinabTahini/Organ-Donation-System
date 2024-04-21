@@ -5,7 +5,7 @@ if(isset($_GET["hid"]))
 	$hid=$_GET["hid"];
 	$status = 1;
 	
-	$sql = "UPDATE add_hospital SET status='$status' WHERE hid='$hid'";
+	$sql = "UPDATE hospital SET status='$status' WHERE hid='$hid'";
 
     $result= mysqli_query($con,$sql);
    
