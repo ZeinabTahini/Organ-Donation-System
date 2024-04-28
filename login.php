@@ -5,8 +5,9 @@ require_once 'conx.php';
 if (isset($_POST['email']) && isset($_POST['password'])){
     $email=$_POST['email'];
     $password=$_POST['password'];
+    
     // Fetch user data from the database
-    $query="select * from donor where email='".$email."'";
+    $query="select * from patient where email='".$email."'";
     $result= mysqli_query($con,$query);
     
     if(mysqli_num_rows($result) === 1){
@@ -15,9 +16,9 @@ if (isset($_POST['email']) && isset($_POST['password'])){
         // Verify the hashed password
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['is_logged_in'] = 1;
-            $did = $row['did'];
-            header("location:donor-info.php?did=$did");
-            echo '<script>alert("Welcome to Organ Donor!")</script>';
+            $pid = $row['pid'];
+            header("location:patient-info.php?pid=$pid");
+            echo '<script>alert("Welcome to DonateHope!")</script>';
             exit(); // Exit after redirection
         } else {
             // Incorrect password
