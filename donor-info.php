@@ -12,43 +12,33 @@ $did = $row0['did'];
 
 <head>
     <meta charset="UTF-8">
-    
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="../assets/css/donor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	 <title> Organ Donor | Donor-Info </title>
 	  <!-- Favicon -->
-    
-	
-    
+    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
 </head>
 
 <body>
-<div class="container">
-            <div class="sidebar">
-                <div class="header">
-                    <i class="bx bx-menu icon"></i>
-                    <span class="title">Donor</span>
-                </div>
-                <div class="menu-bar">
-                    <div class="menu">
-                        <li class="menu-link">
-                            <a href="donor-info.php?did=<?php echo $did; ?>" class="active">
-                                <i class="fa-solid fa-person-circle-plus"></i>
-                                <span class="text">Add Donor Details</span>
-                            </a>
-                        </li>
-					
-						</div>
-                    <div class="bottom-menu">
-                        <li class="menu-link">
-                            <a href="../index.php">
-                                <i class="bx bx-log-out icons"></i>
-                                <span class="text">logout</span>
-                            </a>
-                    </div>
+<div class="app">
+<div class="menu-toggle">
+			<div class="organ">
+				<span></span>
+			</div>
+		</div>
+		<aside class="sidebar">
+			<h3>Donor</h3>
+			
+			<nav class="menu">
+				<a href="donor-info.php?did=<?php echo $did; ?>" class="menu-item is-active"><i class="fa-solid fa-person-circle-plus"></i> Add Donor Details</a>
+				<a href="../index.php" class="menu-item">
+  <i class="bx bx-log-out icons"></i> Logout
+</a>
+			</nav>
 
-                </div>
-
-            </div>
+		</aside>
 			
     <div class="container1">
     <div class="title">Add Donor Details</div>
@@ -145,6 +135,14 @@ $did = $row0['did'];
 </div>
 </body>
 
- 
+ <script>
+		const menu_toggle = document.querySelector('.menu-toggle');
+		const sidebar = document.querySelector('.sidebar');
+
+		menu_toggle.addEventListener('click', () => {
+			menu_toggle.classList.toggle('is-active');
+			sidebar.classList.toggle('is-active');
+		});
+	</script>
 
 </html>

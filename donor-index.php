@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,600,0,0" />
     <title> Organ Donor | Donor-Login </title>
 	  <!-- Favicon -->
- 
+    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
 </head>
 
 <body>
@@ -38,7 +40,7 @@
                 </div>
         </div>
         <div class="login-right">
-            
+            <img src="../assets/images/login-donor.jpg" alt="image">
         </div>
     </div>
 </body>
