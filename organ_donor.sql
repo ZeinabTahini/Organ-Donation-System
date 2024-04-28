@@ -121,6 +121,29 @@ CREATE TABLE `patient_details` (
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `send`
+--
+
+CREATE TABLE `send` (
+  `pid` int(11) NOT NULL,
+  `did` int(11) NOT NULL,
+  `hid` int(11) NOT NULL,
+  `donor_name` varchar(100) NOT NULL,
+  `hospital_name` varchar(100) NOT NULL,
+  `age` varchar(100) NOT NULL,
+  `gender` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `blood_group` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `donate_organ` varchar(100) NOT NULL,
+  `causesofDeath` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
