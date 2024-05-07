@@ -5,5 +5,5 @@ $pid=$_SESSION['pid'];
 $sql = "DELETE FROM appointment WHERE pid='" . $_GET["pid"] . "'";
 mysqli_query($con, $sql);
 
-header("location:saved-appointment.php");
+header("location:appointment.php");
 ?>
