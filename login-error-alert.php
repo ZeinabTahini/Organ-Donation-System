@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,600,0,0" />
-    <title>Login Page</title>
+    <title> Organ Donor | Login-Error</title>
+	  <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
 	<style>
 	.three {
-             background: linear-gradient(45deg, #131086, #b621f3);
+            background-color: red;
             color: white;
             border: none;
             border-radius: 50px;
@@ -43,8 +45,7 @@
     <div class="container">
         <div class="login-left">
             <div class="login-header" >
-                    <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
-
+                   <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
             </div>
 			<div class="message login-form" autocomplete="off">
                 <p>Wrong email or password! </br>
@@ -58,7 +59,7 @@ Please enter your email and password correctly.</p>
             </div>
         </div>
         <div class="login-right">
-            <img src="../assets/images/hospital.jpg" alt="image">
+            <img src="../assets/images/login-patient.jpg" alt="image">
         </div>
     </div>
 </body>

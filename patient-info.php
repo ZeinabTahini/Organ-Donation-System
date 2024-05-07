@@ -8,6 +8,7 @@ $pid = isset($_GET['pid']) ? $_GET['pid'] : '';
 $sql0 = "SELECT * FROM patient WHERE pid='$pid'";
 $result0 = mysqli_query($con, $sql0);
 $row0 = mysqli_fetch_array($result0);
+$result = mysqli_query($con, "SELECT * FROM send WHERE pid='$pid' and status='0'");
 
 ?>
 
@@ -39,7 +40,17 @@ $row0 = mysqli_fetch_array($result0);
 			
 			<nav class="menu">
 				<a href="patient-info.php?pid=<?php echo $pid; ?>" class="menu-item is-active"><i class="fa-solid fa-person-circle-plus"></i> Add Patient Details</a>
-				<a href="matching-donor.php?pid=<?php echo $pid; ?>" class="menu-item"><i class="fa-solid fa-equals"></i> Matching Donor</a>
+				<a href="matching-donor.php?pid=<?php echo $pid; ?>" class="menu-item">
+				<i class='fa-solid fa-equals'></i> Matching Donor
+    <?php
+        if (mysqli_num_rows($result) > 0) {
+            $newRequest = mysqli_num_rows($result);
+            echo "<span class='badge me-1' style='background-color:#07960c;color:#fff'>" . $newRequest . " new donor</span>";
+        }
+    ?>
+    
+</a>
+
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>

@@ -49,7 +49,6 @@ $result = mysqli_query($con, "SELECT * FROM send WHERE pid='$pid' AND status = '
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
-
 		</aside>
         <div class="container">
     <h4>Matching Donor</h4> 
@@ -89,7 +88,9 @@ $result = mysqli_query($con, "SELECT * FROM send WHERE pid='$pid' AND status = '
                 <td><?php echo $row1['address']; ?></td>
                 <td><?php echo $row1['blood_group']; ?></td>
                 <td><?php echo $row1['email']; ?></td>
-                <td><?php echo $row1['phone']; ?></td>
+               <td>
+    <?php echo $row1['phone']; ?> 
+</td>
                 <td><?php echo $row1['donate_organ']; ?></td>
                 <td><?php echo $row1['causesofDeath']; ?></td>
                 <td><a href="accept-donor.php?did=<?php echo $row['did']; ?>&pid=<?php echo $row['pid']; ?>" class="btn btn-primary opacity-transition" style="background-color: #07960c; border-color: #07960c; width: 90px;">Accept</a></td>
