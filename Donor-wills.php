@@ -1,17 +1,17 @@
 <?php
 include_once 'conx.php';
-$result = mysqli_query($con,"SELECT * FROM hospital WHERE status=1");
 $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
 ?>
+
 
     <!DOCTYPE html>
     <html lang="en">
 
-    <head>
+     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
-         <title> Organ Donor | Admin-Hospital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+         <title> Organ Donor | Admin-Donor-Wills</title>
 	  <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
         <!---Boxicons CSS-->
@@ -48,47 +48,66 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     }
     ?>
 </a>
-<a href="hospital.php" class="menu-item is-active"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
+<a href="hospital.php" class="menu-item"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
 <a href="Organ-Donate-Process.php" class="menu-item "><i class="fa-regular fa-hourglass"></i> Organ Donate Process</a>
 <a href="Donated-Patient.php" class="menu-item"><i class="bx bx-heart icons"></i> Donated Patient</a>
-				<a  href="Donor-wills.php" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
+<a  href="Donor-wills.php" class="menu-item is-active"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
+
 		</aside>
-            <div class="container">
-			 <h4>Saved Hospitals</h4>
+           <div class="container">
+			 <h4>Donor Wills </h4>
     <table class="table table-hover responsiveTable" id="example1">
       <thead>
         <tr>
-          <th>Id</th>
-          <th>Hospital Name</th>
-		  <th>E-Mail</th>
-          <th>Info</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-                             <?php 
-                            if(mysqli_num_rows($result)>0){
-                              $i=0;
-                                while($row = mysqli_fetch_array($result)){
+                                    <th> Donor Name </th>
+                                    <th> Hospital Name </th>
+                                    <th> age </th>
+                                    <th> Address </th>
+                                    <th> E-Mail </th>
+                                    <th> Contact No</th>
+                                    <th> ID</th>
+                                    <th> Donate Organ</th>
+                                    <th> Signature</th>
+                                    <th> Consent</th>
+                                    <th> Delete</th>
+                                    <th> Send</th>
                                     
+                                </tr>
+      </thead>
+       <tbody>
+                            <?php 
+                           $result = mysqli_query($con, "SELECT w.*, h.username AS hospital_username FROM wills w 
+                                INNER JOIN hospital h ON w.hid = h.hid
+                                WHERE w.status = '0'");
+                            if(mysqli_num_rows($result)>0){
+                              $i=1;
+                                while($row = mysqli_fetch_array($result)){ 
                             ?>
                                 <tr>
-                                    <td> <?php echo $row['hid']; ?> </td>
-                                    <td><?php echo $row['username']; ?></td>
+                                    <td><?php echo $row['donor_name']; ?></td>
+                                    <td><?php echo $row['hospital_username']; ?></td>
+									<td> <?php echo $row['age']; ?> </td>
+									<td> <?php echo $row['address']; ?> </td>
                                     <td> <?php echo $row['email']; ?> </td>
-									<td><a href="Info/<?php echo $row['info'] ?>" style="color: #07960c; text-decoration: none;"><?php echo $row['info'] ?></a></td>
-									<td><a href="delete-hospital.php?hid=<?php echo $row['hid'];?>" style="color: #07960c; text-decoration: none;"><i class="fa-regular fa-trash-can"></i></a></td>
+                                    <td> <?php echo $row['phone']; ?> </td>
+									<td><a href="../admin/ID/<?php echo $row['id'] ?>" style="color: #07960c; text-decoration: none;"><?php echo $row['id'] ?></a></td>
+									<td> <?php echo $row['donate_organ']; ?> </td>
+									<td> <?php echo $row['signature']; ?> </td>
+									<td> <?php echo $row['consent']; ?> </td>
+									<td><a href="delete-wills.php?did=<?php echo $row['did'];?>" style="color: #07960c; text-decoration: none;"><i class="fa-regular fa-trash-can"></i></a></td>
+									<td><a href="send-wills.php?did=<?php echo $row['did']; ?>" style="color: #07960c; text-decoration: none;"><i class="fa-solid fa-share linkk linkk"></i></a></td>
+
                                     </tr>
                                     <?php
                                 }
                             } else {
                                 ?>
                                 <tr>
-                                    <td colspan="6">NO SAVED HOSPITALS!</td>
+                                    <td colspan="13">NO UPCOMING WILLS!</td>
                                 </tr>
                                 <?php
                             }
@@ -98,7 +117,7 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
             </div>
         </div>
     </body>
-    <!-- Bootstrap core JavaScript-->
+<!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -119,9 +138,8 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
         let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
 
         // basic table
-        let headers1 = ['Id', 'Hospital Name', 'E-Mail', 'Info', 'Delete'];
+        let headers1 = ['Donor Name', 'Hospital Name', 'Age', 'Address', 'E-Mail', 'Contact No', 'Donate Organ', 'Signature', 'Consent', 'Delete', 'Send'];
         toResponsive('example1', headers1, headerStyle);
     })();
 </script>
-
     </html>

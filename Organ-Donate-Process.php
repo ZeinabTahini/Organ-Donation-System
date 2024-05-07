@@ -13,109 +13,60 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
         <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
          <title> Organ Donor | Admin-Organ-Process</title>
 	  <!-- Favicon -->
-    
+    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
+        <!---Boxicons CSS-->
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="../assets/css/admin.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+        />
+		<!-- Bootstrap core CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 
     </head>
 
     <body>
-        <div class="container">
-            <div class="sidebar">
-                <div class="header">
-                    <i class="bx bx-menu icon"></i>
-                    <span class="title">Admin</span>
-                </div>
-                <div class="menu-bar">
-                    <div class="menu">
-                        <li class="menu-link">
-                            <a href="Donor-Details.php" >
-                                 <i class="fa-solid fa-hand-holding-medical"></i>
-                                <span class="text">Donor Details</span>
-                            </a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="Patient-Details.php">
-                                <i class="fa-solid fa-hospital-user"></i>
-                                <span class="text">Patient Details</span>
-                            </a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="Search-Donor.php">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <span class="text">Search Donor</span>
-                            </a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="Search-Patient.php">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <span class="text">Search Patient</span>
-                            </a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="Donated-Patient.php">
-                                <i class="bx bx-heart icons"></i>
-                                <span class="text">Donated Patient</span>
-                            </a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="Organ-Donate-Process.php" class="active">
-                                <i class="fa-regular fa-hourglass"></i>
-                                <span class="text">Organ Donate Process</span>
-                            </a>
-                        </li>
-						<li class="menu-link">
-                    <a href="hospital-apps.php">
-                       <i class="fa-regular fa-bell"></i>
-                        <span class="text">Hospital Applications</span>
-                        <?php
-                        if (mysqli_num_rows($result1) > 0) {
-                            $newRequest = mysqli_num_rows($result1);
-                            ?>
-                           <span class="badge  me-1" style="background-color:#07960c;color:#fff;">
-    <?php echo $newRequest; ?> new hospital
-</span>
+       <div class="app">
+		<div class="menu-toggle">
+			<div class="organ">
+				<span></span>
+			</div>
+		</div>
+		<aside class="sidebar">
+			<h3>Admin</h3>
+			
+			<nav class="menu">
+				<a href="Donor-Details.php" class="menu-item "><i class="fa-solid fa-hand-holding-medical"></i> Donor Details</a>
+				<a href="Patient-Details.php" class="menu-item"><i class="fa-solid fa-hospital-user"></i> Patient Details</a>
+				<a href="hospital-apps.php" class="menu-item ">
+    <i class="fa-regular fa-bell"></i> Hospital Applications 
+    <?php
+    if (mysqli_num_rows($result1) > 0) {
+        $newRequest = mysqli_num_rows($result1);
+        echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new hospital</span>';
+    }
+    ?>
+</a>
+<a href="hospital.php" class="menu-item"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
+<a href="Organ-Donate-Process.php" class="menu-item is-active"><i class="fa-regular fa-hourglass"></i> Organ Donate Process</a>
+<a href="Donated-Patient.php" class="menu-item"><i class="bx bx-heart icons"></i> Donated Patient</a>
+				<a  href="Donor-wills.php" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
+				<a href="../index.php" class="menu-item">
+  <i class="bx bx-log-out icons"></i> Logout
+</a>
+			</nav>
 
-                        <?php
-                        }
-                        ?>
-                    </a>
-                </li>
-						<li class="menu-link">
-                            <a href="hospital.php">
-                               <i class="fa-regular fa-hospital"></i>
-                                <span class="text">All Saved Hospitals</span>
-                            </a>
-                        </li>
-						<li class="menu-link">
-                            <a href="Donor-wills.php">
-                               <i class="fa-regular fa-pen-to-square"></i>
-                                <span class="text">Donor Wills</span>
-                            </a>
-							</li>
-                    </div>
-                    <div class="bottom-menu">
-                        <li class="menu-link">
-                            <a href="../index.php">
-                                <i class="bx bx-log-out icons"></i>
-                                <span class="text">logout</span>
-                            </a>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="main">
-                <main class="heading table " id="customers_table">
-                    <section class="table__header">
-                        <h1>Organ Donate Process</h1>
-                    </section>
-                    <section class="table__body">
-                        <table>
-                            <thead>
-                            
-                                <tr>
-                                    <th> Id </th>
-                                    <th> D-Name </th>
-                                    <th> H-Name </th>
+		</aside>
+            <div class="container">
+			 <h4>Organ Donate Process</h4>
+    <table class="table table-hover responsiveTable" id="example1">
+      <thead>
+        <tr>
+									<th> Id </th>
+                                    <th> Donor Name </th>
+                                    <th> Hospital Name </th>
                                     <th> Age </th>
                                     <th> Gender </th>
                                     <th> Address </th>
@@ -125,10 +76,10 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
                                     <th> Donate Organ </th>
                                     <th> Causes of Death </th>
                                     <th> Status </th>
-									
-                                </tr>
-                            </thead>
-                            <tbody>
+                                    <th> Check </th>
+        </tr>
+      </thead>
+      <tbody>
                             <?php 
                             $result = mysqli_query($con, "SELECT d.*, ah.username AS hospital_username 
                                FROM donor_details d 
@@ -157,11 +108,11 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     switch ($row['status']) {
         case 0:
             $status = 'Pending';
-            $statusClass = 'cancelled';
+            $statusClass = 'pending';
             break;
         case 1:
             $status = 'Completed';
-            $statusClass = 'pending';
+            $statusClass = 'completed';
             break;
         default:
             $status = $row['status'];
@@ -171,7 +122,7 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
 </td>
 
 <td>
-    <a href="matching.php?blood_group=<?php echo urlencode($row['blood_group']); ?>&donate_organ=<?php echo urlencode($row['donate_organ']); ?>&did=<?php echo $row['did']; ?>">
+    <a href="matching.php?blood_group=<?php echo urlencode($row['blood_group']); ?>&donate_organ=<?php echo urlencode($row['donate_organ']); ?>&did=<?php echo $row['did']; ?>"style="color: #07960c; text-decoration: none;">
         <i class="fa-solid fa-check-double"></i>
     </a>
 </td>
@@ -185,18 +136,40 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
                             } else {
                                 ?>
                                 <tr>
-                                    <td colspan="13">NO ORGAN DETAILS!</td>
+                                    <td colspan="13">NO PROCESS DETAILS!</td>
                                 </tr>
                                 <?php
                             }
                             ?>
                             </tbody>
                         </table>
-                    </section>
-                </main>
             </div>
         </div>
     </body>
-   
+     <!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src="../assets/js/admin.js"></script> 
+<script type="text/javascript">
+    // Toggle menu functionality
+    const menu_toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+
+    menu_toggle.addEventListener('click', () => {
+        menu_toggle.classList.toggle('is-active');
+        sidebar.classList.toggle('is-active');
+    });
+
+    (() => {
+        // to match styling of the table when full screen
+        let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
+
+        // basic table
+        let headers1 = ['Id', 'Donor Name', 'Hospital Name', 'Age', 'Gender', 'Address', 'Blood Group', 'E-Mail', 'Contact No', 'Donate Organ', 'Causes of Death', 'Status', 'Check'];
+        toResponsive('example1', headers1, headerStyle);
+    })();
+</script>
 
     </html>

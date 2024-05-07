@@ -1,6 +1,5 @@
 <?php
 include_once 'conx.php';
-$result = mysqli_query($con,"SELECT * FROM hospital WHERE status=1");
 $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
 ?>
 
@@ -10,8 +9,8 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
-         <title> Organ Donor | Admin-Hospital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+         <title> Organ Donor | Admin-Donated-Patient</title>
 	  <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
         <!---Boxicons CSS-->
@@ -27,7 +26,7 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     </head>
 
     <body>
-       <div class="app">
+        <div class="app">
 		<div class="menu-toggle">
 			<div class="organ">
 				<span></span>
@@ -48,47 +47,78 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     }
     ?>
 </a>
-<a href="hospital.php" class="menu-item is-active"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
+<a href="hospital.php" class="menu-item"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
 <a href="Organ-Donate-Process.php" class="menu-item "><i class="fa-regular fa-hourglass"></i> Organ Donate Process</a>
-<a href="Donated-Patient.php" class="menu-item"><i class="bx bx-heart icons"></i> Donated Patient</a>
-				<a  href="Donor-wills.php" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
+<a href="Donated-Patient.php" class="menu-item is-active"><i class="bx bx-heart icons"></i> Donated Patient</a>
+<a  href="Donor-wills.php" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
+
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
+
 		</aside>
             <div class="container">
-			 <h4>Saved Hospitals</h4>
+			 <h4>Donated Patient </h4>
     <table class="table table-hover responsiveTable" id="example1">
       <thead>
-        <tr>
-          <th>Id</th>
-          <th>Hospital Name</th>
-		  <th>E-Mail</th>
-          <th>Info</th>
-          <th>Delete</th>
-        </tr>
+       <tr>
+                                    <th> Id </th>
+                                    <th> Patient Name </th>
+                                    <th> Age </th>
+                                    <th> Gender </th>
+                                    <th> Address </th>
+                                    <th> Bood Group </th>
+                                    <th> E-Mail </th>
+                                    <th> Contact No </th>
+                                    <th> Needed Organ </th>
+                                    <th> Time Required </th>
+                                    <th> Status </th>
+                                </tr>
       </thead>
-      <tbody>
-                             <?php 
+     <tbody>
+                            <?php 
+                            $result = mysqli_query($con,"SELECT * FROM patient_details where status = '1'");
                             if(mysqli_num_rows($result)>0){
-                              $i=0;
-                                while($row = mysqli_fetch_array($result)){
-                                    
+                              $i=1;
+                                while($row = mysqli_fetch_array($result)){ 
                             ?>
-                                <tr>
-                                    <td> <?php echo $row['hid']; ?> </td>
-                                    <td><?php echo $row['username']; ?></td>
+                                 <tr>
+                                    <td> <?php echo $row['pid']; ?> </td>
+                                    <td><?php echo $row['patient_name']; ?></td>
+                                    <td> <?php echo $row['age']; ?> </td>
+                                    <td> <?php echo $row['gender']; ?> </td>
+                                    <td> <?php echo $row['address']; ?> </td>
+                                    <td> <?php echo $row['blood_group']; ?> </td>
                                     <td> <?php echo $row['email']; ?> </td>
-									<td><a href="Info/<?php echo $row['info'] ?>" style="color: #07960c; text-decoration: none;"><?php echo $row['info'] ?></a></td>
-									<td><a href="delete-hospital.php?hid=<?php echo $row['hid'];?>" style="color: #07960c; text-decoration: none;"><i class="fa-regular fa-trash-can"></i></a></td>
+                                    <td><?php echo $row['phone']; ?></td>
+                                    <td> <?php echo $row['needed_organ']; ?> </td>
+                                    <td> <?php echo $row['timeRequired']; ?> </td>
+									  <td>
+    <?php
+    $statusClass = '';
+    switch ($row['status']) {
+        case 0:
+            $status = 'Pending';
+            $statusClass = 'pending';
+            break;
+        case 1:
+            $status = 'Completed';
+            $statusClass = 'completed';
+            break;
+        default:
+            $status = $row['status'];
+    }
+    ?>
+    <p class="status <?php echo $statusClass; ?>"><?php echo $status; ?></p>
+</td>
                                     </tr>
                                     <?php
                                 }
                             } else {
                                 ?>
                                 <tr>
-                                    <td colspan="6">NO SAVED HOSPITALS!</td>
+                                    <td colspan="12">NO DONATED PATIENT DETAILS!</td>
                                 </tr>
                                 <?php
                             }
@@ -98,7 +128,7 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
             </div>
         </div>
     </body>
-    <!-- Bootstrap core JavaScript-->
+<!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -119,9 +149,8 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
         let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
 
         // basic table
-        let headers1 = ['Id', 'Hospital Name', 'E-Mail', 'Info', 'Delete'];
+        let headers1 = ['Id', 'Donor Name', 'Hospital Name', 'Age', 'Gender', 'Address', 'Blood Group', 'E-Mail', 'Contact No', 'Donate Organ', 'Causes of Death', 'Status'];
         toResponsive('example1', headers1, headerStyle);
     })();
 </script>
-
     </html>

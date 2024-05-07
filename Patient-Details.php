@@ -1,6 +1,6 @@
 <?php
 include_once 'conx.php';
-$result = mysqli_query($con,"SELECT * FROM patient_details");
+$result = mysqli_query($con,"SELECT * FROM donor_details");
 $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
 ?>
 
@@ -8,104 +8,75 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
+         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
          <title> Organ Donor | Admin-Patient-Details</title>
 	  <!-- Favicon -->
-  
-
+    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
+        <!---Boxicons CSS-->
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="../assets/css/admin.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+        />
+		<!-- Bootstrap core CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
 
     <body>
-        <div class="container">
-            <div class="sidebar">
-                <div class="header">
-                    <i class="bx bx-menu icon"></i>
-                    <span class="title">Admin</span>
-                </div>
-                <div class="menu-bar">
-                    <div class="menu">
-                        <li class="menu-link">
-                            <a href="Donor-Details.php">
-                                 <i class="fa-solid fa-hand-holding-medical"></i>
-                                <span class="text">Donor Details</span>
-                            </a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="Patient-Details.php" class="active">
-                                <i class="fa-solid fa-hospital-user"></i>
-                                <span class="text">Patient Details</span>
-                            </a>
-							</li>
-							<li class="menu-link">
-                    <a href="hospital-apps.php">
-                       <i class="fa-regular fa-bell"></i>
-                        <span class="text">Hospital Applications</span>
-                        <?php
-                        if (mysqli_num_rows($result1) > 0) {
-                            $newRequest = mysqli_num_rows($result1);
-                            ?>
-                           <span class="badge  me-1" style="background-color:#07960c;color:#fff;">
-    <?php echo $newRequest; ?> new hospital
-</span>
+	<div class="app">
+		<div class="menu-toggle">
+			<div class="organ">
+				<span></span>
+			</div>
+		</div>
+		<aside class="sidebar">
+			<h3>Admin</h3>
+			
+			<nav class="menu">
+				<a href="Donor-Details.php" class="menu-item "><i class="fa-solid fa-hand-holding-medical"></i> Donor Details</a>
+				<a href="Patient-Details.php" class="menu-item is-active"><i class="fa-solid fa-hospital-user"></i> Patient Details</a>
+				<a href="hospital-apps.php" class="menu-item ">
+    <i class="fa-regular fa-bell"></i> Hospital Applications 
+    <?php
+    if (mysqli_num_rows($result1) > 0) {
+        $newRequest = mysqli_num_rows($result1);
+        echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new hospital</span>';
+    }
+    ?>
+</a>
+<a href="hospital.php" class="menu-item"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
+<a href="Organ-Donate-Process.php" class="menu-item "><i class="fa-regular fa-hourglass"></i> Organ Donate Process</a>
+<a href="Donated-Patient.php" class="menu-item"><i class="bx bx-heart icons"></i> Donated Patient</a>
+<a  href="Donor-wills.php" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
 
-                        <?php
-                        }
-                        ?>
-                    </a>
-                </li>
-						<li class="menu-link">
-                            <a href="hospital.php">
-                               <i class="fa-regular fa-hospital"></i>
-                                <span class="text">All Saved Hospitals</span>
-                            </a>
-                        </li>
-						</div>
-                    <div class="bottom-menu">
-                        <li class="menu-link">
-                            <a href="../index.php">
-                                <i class="bx bx-log-out icons"></i>
-                                <span class="text">logout</span>
-                            </a>
-                    </div>
-                </div>
-            </div>
-            <div class="main">
-                <main class="heading table " id="customers_table">
-                    <section class="table__header">
-                        <h1>Patient Details</h1>
-                        <div class="input-group">
-                            <input type="search" placeholder="Search Data...">
-                           
-                        </div>
-                        <div class="export__file">
-                            <label for="export-file" class="export__file-btn" title="Export File"></label>
-                            <input type="checkbox" id="export-file">
-                            <div class="export__file-options">
-                                <label>Export As &nbsp; &#10140;</label>
-                               
-                            </div>
-                        </div>
-                    </section>
-                    <section class="table__body">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Patient Name <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Age <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Gender <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Address <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Bood Group <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> E-Mail <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Contact No <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Needed Organ <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Time Required <span class="icon-arrow">&UpArrow;</span></th>
-                                    <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
+				<a href="../index.php" class="menu-item">
+  <i class="bx bx-log-out icons"></i> Logout
+</a>
+			</nav>
+
+		</aside>
+             <div class="container">
+			 <h4>Patient Details </h4>
+    <table class="table table-hover responsiveTable" id="example1">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Patient Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Address</th>
+          <th>Blood Group</th>
+		  <th>E-Mail</th>
+          <th>Contact No</th>
+          <th>Needed Organ</th>
+          <th>Time Required</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
                             <?php 
                             $result = mysqli_query($con,"SELECT * FROM patient_details");
                             if(mysqli_num_rows($result)>0){
@@ -129,11 +100,11 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
     switch ($row['status']) {
         case 0:
             $status = 'Pending';
-            $statusClass = 'cancelled';
+            $statusClass = 'pending';
             break;
         case 1:
             $status = 'Completed';
-            $statusClass = 'pending';
+            $statusClass = 'completed';
             break;
         default:
             $status = $row['status'];
@@ -154,11 +125,32 @@ $result1 = mysqli_query($con, "SELECT * FROM hospital WHERE status='0'");
                             ?>
                             </tbody>
                         </table>
-                    </section>
-                </main>
             </div>
         </div>
     </body>
-   
+   <!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<script src="../assets/js/admin.js"></script> 
+<script type="text/javascript">
+    // Toggle menu functionality
+    const menu_toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+
+    menu_toggle.addEventListener('click', () => {
+        menu_toggle.classList.toggle('is-active');
+        sidebar.classList.toggle('is-active');
+    });
+
+    (() => {
+        // to match styling of the table when full screen
+        let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
+
+        // basic table
+        let headers1 = ['Id', 'Patient Name', 'Age', 'Gender', 'Address', 'Blood Group', 'E-Mail', 'Contact No', 'Needed Organ', 'Time Required', 'Status'];
+        toResponsive('example1', headers1, headerStyle);
+    })();
+</script>
     </html>

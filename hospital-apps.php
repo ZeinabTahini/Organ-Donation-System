@@ -14,7 +14,7 @@ include_once 'conx.php';
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
         <!---Boxicons CSS-->
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="../assets/css/admin-style.css">
+        <link rel="stylesheet" href="../assets/css/admin.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"
         />
 		<!-- Bootstrap core CSS-->
@@ -37,16 +37,11 @@ include_once 'conx.php';
 			<nav class="menu">
 				<a href="Donor-Details.php" class="menu-item "><i class="fa-solid fa-hand-holding-medical"></i> Donor Details</a>
 				<a href="Patient-Details.php" class="menu-item"><i class="fa-solid fa-hospital-user"></i> Patient Details</a>
-				<a href="hospital-apps.php" class="menu-item is-active">
-    <i class="fa-regular fa-bell"></i> Hospital Applications 
-    <?php
-    if (mysqli_num_rows($result1) > 0) {
-        $newRequest = mysqli_num_rows($result1);
-        echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new hospital</span>';
-    }
-    ?>
-</a>
-<a href="hospital.php" class="menu-item"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
+				<a href="hospital-apps.php" class="menu-item is-active"><i class="fa-regular fa-bell"></i> Hospital Applications</a>
+				<a href="hospital.php" class="menu-item"><i class="fa-regular fa-hospital"></i> All Saved Hospitals </a>
+				<a href="Organ-Donate-Process.php" class="menu-item "><i class="fa-regular fa-hourglass"></i> Organ Donate Process</a>
+				<a href="Donated-Patient.php" class="menu-item"><i class="bx bx-heart icons"></i> Donated Patient</a>
+				<a  href="Donor-wills.php" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
 
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
@@ -55,7 +50,7 @@ include_once 'conx.php';
 
 		</aside>
 		<div class="container">
-			 <h4>Donor Details </h4>
+			 <h4>Hospital Applications</h4>
     <table class="table table-hover responsiveTable" id="example1">
       <thead>
         <tr>
@@ -77,10 +72,11 @@ include_once 'conx.php';
                                 <tr>
                                     <td> <?php echo $row['hid']; ?> </td>
                                     <td><?php echo $row['username']; ?></td>
-                                    <td><a href="Info/<?php echo $row['info']; ?>"><?php echo $row['info']; ?></a></td>
+									<td><a href="Info/<?php echo $row['info'] ?>" style="color: #07960c; text-decoration: none;"><?php echo $row['info'] ?></a></td>
                                     <td> <?php echo $row['email']; ?> </td>
-									<td><a href="accept-hospital.php?hid=<?php echo $row['hid']; ?>" class="btn btn-primary">Accept</a></td>
-									<td><a href="reject-hospital.php?hid=<?php echo $row['hid']; ?>" class="btn btn-primary">Reject</a></td>
+									<td><a href="accept-hospital.php?hid=<?php echo $row['hid']; ?>" class="btn btn-primary opacity-transition" style="background-color: #07960c; border-color: #07960c; width: 90px;">Accept</a></td>
+									<td><a href="reject-hospital.php?hid=<?php echo $row['hid']; ?>" class="btn btn-primary opacity-transition" style="background-color: #07960c; border-color: #07960c; width: 90px;">Reject</a></td>
+									
                                     </tr>
                                     <?php
                                 }
@@ -97,6 +93,30 @@ include_once 'conx.php';
             </div>
         </div>
     </body>
-    <script src="../assets/js/admin-script.js"></script>
+   <!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src="../assets/js/admin.js"></script> 
+<script type="text/javascript">
+    // Toggle menu functionality
+    const menu_toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+
+    menu_toggle.addEventListener('click', () => {
+        menu_toggle.classList.toggle('is-active');
+        sidebar.classList.toggle('is-active');
+    });
+
+    (() => {
+        // to match styling of the table when full screen
+        let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
+
+        // basic table
+        let headers1 = ['Id', 'Hospital Name', 'Info', 'E-Mail', 'Accept Hospital', 'Reject Hospital'];
+        toResponsive('example1', headers1, headerStyle);
+    })();
+</script>
 
     </html>
