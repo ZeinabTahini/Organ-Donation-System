@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2024 at 03:27 PM
+-- Generation Time: May 04, 2024 at 03:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,6 +42,39 @@ INSERT INTO `admin` (`email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `appointment`
+--
+
+CREATE TABLE `appointment` (
+  `hid` int(11) NOT NULL,
+  `h_name` varchar(100) NOT NULL,
+  `h_email` varchar(100) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `did` int(11) NOT NULL,
+  `time` time NOT NULL,
+  `date` date NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor`
+--
+
+CREATE TABLE `doctor` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `hospital` varchar(100) NOT NULL,
+  `cv` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `donor`
 --
 
@@ -76,6 +109,24 @@ CREATE TABLE `donor_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `donor_messages`
+--
+
+CREATE TABLE `donor_messages` (
+  `msg_id` varchar(100) NOT NULL,
+  `pid` varchar(100) NOT NULL,
+  `did` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `sender` varchar(100) NOT NULL,
+  `msg` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hospital`
 --
 
@@ -85,6 +136,24 @@ CREATE TABLE `hospital` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `info` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `msg_id` varchar(100) NOT NULL,
+  `pid` varchar(100) NOT NULL,
+  `did` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `sender` varchar(100) NOT NULL,
+  `msg` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -144,9 +213,64 @@ CREATE TABLE `send` (
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wills`
+--
+
+CREATE TABLE `wills` (
+  `did` int(11) NOT NULL,
+  `hid` int(11) NOT NULL,
+  `donor_name` varchar(100) NOT NULL,
+  `age` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `id` varchar(100) NOT NULL,
+  `donate_organ` varchar(100) NOT NULL,
+  `signature` varchar(100) NOT NULL,
+  `consent` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `choosesorgan`
+--
+
+CREATE TABLE `choosesorgan` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organs`
+--
+
+CREATE TABLE `organs` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `description` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `doctor`
+--
+ALTER TABLE `doctor`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `donor`
@@ -169,6 +293,12 @@ ALTER TABLE `patient`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `doctor`
+--
+ALTER TABLE `doctor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donor`
