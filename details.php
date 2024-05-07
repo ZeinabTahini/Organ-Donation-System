@@ -5,14 +5,14 @@ $hid = $_SESSION['hid'];
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
+   <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-          <title>Organ Donor | Admin-Hospital-apps</title>
+         <title> Organ Donor | Hospital-Matching-Acceptance </title>
 	  <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
         <!---Boxicons CSS-->
@@ -27,8 +27,8 @@ $hid = $_SESSION['hid'];
 
     </head>
 
-<body>
-   <div class="app">
+    <body>
+       <div class="app">
 		<div class="menu-toggle">
 			<div class="organ">
 				<span></span>
@@ -38,69 +38,73 @@ $hid = $_SESSION['hid'];
 			<h3>Hospital</h3>
 			
 			<nav class="menu">
-				<a href="details.php" class="menu-item "><i class="fa-solid fa-hand-holding-medical"></i> Matching Acceptance</a>
-				<a <a href="Donor-wills.php" class="menu-item is-active"><i class="fa-regular fa-pen-to-square"></i> Donor Wills </a>
+				<a href="details.php" class="menu-item is-active"><i class="fa-solid fa-hand-holding-medical"></i> Matching Acceptance</a>
+				<a <a href="Donor-wills.php" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills </a>
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
 
 		</aside>
-        <div class="container">
-			 <h4>Donor Wills </h4>
+            <div class="container">
+			 <h4>Matching Acceptance</h4>
     <table class="table table-hover responsiveTable" id="example1">
       <thead>
         <tr>
-                                <th> DID </th>
-                                <th> Donor Name </th>
-                                <th> Age </th>
-                                <th> Address </th>
-                                <th> E-Mail </th>
-                                <th> Contact No</th>
-                                <th> ID</th>
-                                <th> Donate Organ</th>
-                                <th> Signature</th>
-                                <th> Consent</th>
-                                <th> Delete</th>
-                            </tr>
+                                    <th> PID </th>
+                                    <th> DID </th>
+                                    <th> P-Name </th>
+                                    <th> D-Name </th>
+                                    <th> P-email </th>
+                                    <th> D-email </th>
+                                    <th> P-Phone </th>
+                                    <th> D-Phone </th>
+                                    <th> Donate Organ </th>
+                                    <th> Appointment </th>
+                                </tr>
       </thead>
-     <tbody>
+       <tbody>
                             <?php 
-                            $result = mysqli_query($con, "SELECT * FROM wills WHERE hid = '$hid' AND status = '1'");
+$result = mysqli_query($con, "SELECT s.*, p.patient_name AS patient_name, p.email AS patient_email FROM send s 
+JOIN patient_details p ON s.pid = p.pid 
+JOIN (SELECT pid, MIN(address) AS address, MIN(email) AS email FROM patient_details GROUP BY pid) pa ON p.pid = pa.pid
+WHERE s.status='1' AND s.hid='$hid'");
 
-                            if(mysqli_num_rows($result) > 0){
-                                while($row = mysqli_fetch_array($result)){ 
-                            ?>
-                            <tr>
-                                <td><?php echo $row['did']; ?></td>
-                                <td><?php echo $row['donor_name']; ?></td>
-                                <td><?php echo $row['age']; ?></td>
-                                <td><?php echo $row['address']; ?></td>
-                                <td><?php echo $row['email']; ?></td>
-                                <td><?php echo $row['phone']; ?></td>
-                                <td><a href="../admin/ID/<?php echo $row['id'] ?>" style="color: #07960c; text-decoration: none;"><?php echo $row['id'] ?></a></td>
-                                <td><?php echo $row['donate_organ']; ?></td>
-                                <td><?php echo $row['signature']; ?></td>
-                                <td><?php echo $row['consent']; ?></td>
-								<td><a href="delete-wills.php?did=<?php echo $row['did'];?>" style="color: #07960c; text-decoration: none;"><i class="fa-regular fa-trash-can"></i></a></td>
-
-                            </tr>
-                            <?php
-                                }
-                            } else {
-                            ?>
-                            <tr>
-                                <td colspan="12">NO UPCOMING WILLS!</td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
+if(mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_array($result)) { 
+?>
+        <tr>
+            <td><?php echo $row['pid']; ?></td>
+            <td><?php echo $row['did']; ?></td>
+            <td><?php echo $row['patient_name']; ?></td>
+            <td><?php echo $row['donor_name']; ?></td>
+            <td><?php echo $row['patient_email']; ?></td>
+            <td><?php echo $row['email']; ?></td>
+            <td><?php echo $row['phone']; ?></td>
+            <td><?php echo $row['phone']; ?></td>
+            <td><?php echo $row['donate_organ']; ?></td>
+            <td>
+                <a href="appointment.php?pid=<?php echo $row['pid']; ?>&did=<?php echo $row['did']; ?>" style="color: #07960c; text-decoration: none;">
+                    <i class="fa-solid fa-share"></i>
+                </a>
+            </td>
+        </tr>
+<?php
+    }
+} else {
+?>
+    <tr>
+        <td colspan="11">NO DONOR DETAILS!</td>
+    </tr>
+<?php
+}
+?>
+                            </tbody>
                         </table>
             </div>
-    </div>
-
-<!-- Bootstrap core JavaScript-->
+        </div>
+    
+     <!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -121,9 +125,9 @@ $hid = $_SESSION['hid'];
         let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
 
         // basic table
-        let headers1 = ['DID', 'Donor Name', 'Age', 'Address', 'E-Mail', 'Contact No', 'ID', 'Donate Organ', 'Signature', 'Consent', 'Delete'];
+        let headers1 = ['PID', 'DID', 'F-Name', 'D-Name', 'P-Email', 'D-Email', 'P-Phone', 'D-Phone', 'Donate Organ', 'Appointment'];
         toResponsive('example1', headers1, headerStyle);
     })();
 </script>
 </body>
-</html>
+    </html>

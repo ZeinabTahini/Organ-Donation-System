@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,600,0,0" />
      <title> Organ Donor | Hospital-Login </title>
 	  <!-- Favicon -->
- 
+    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
 	
 </head>
 
@@ -35,11 +37,12 @@
                 </div>
             </form>
 			<div class="text-center pt-12 pb-12">
-                    <p>New Hospital on DonateHopr? <a href="hospital-register.php" class="underline font-semibold">Apply Now!</a></p>
+                    <p>New Hospital on Organ Donor? <a href="hospital-register.php" class="underline font-semibold">Apply Now!</a></p>
                 </div>
+				
         </div>
         <div class="login-right">
-           
+            <img src="../assets/images/hospital.jpg" alt="image">
         </div>
     </div>
 </body>
