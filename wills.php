@@ -3,7 +3,8 @@ include_once 'conx.php';
 $result0 = mysqli_query($con,"SELECT * FROM donor WHERE did='" . $_GET['did'] . "'");
 $row0= mysqli_fetch_array($result0);
 $did = $row0['did'];
-        ?>
+
+?>
 
 <!DOCTYPE html>
 <!-- Designed by Vipul Kumar -->
@@ -13,7 +14,7 @@ $did = $row0['did'];
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
-         <title> Organ Donor | Donor-Info </title>
+         <title> Organ Donor | Donor-Wills </title>
 	  <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
         <!---Boxicons CSS-->
@@ -39,20 +40,20 @@ $did = $row0['did'];
 			<h3>Donor</h3>
 			
 			<nav class="menu">
-				<a href="donor-info.php?did=<?php echo $did; ?>" class="menu-item is-active"><i class="fa-solid fa-person-circle-plus"></i> Add Donor Details</a>
-<a href="wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
-<a href="saved-wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Saved Wills</a>
+				<a href="donor-info.php?did=<?php echo $did; ?>" class="menu-item"><i class="fa-solid fa-person-circle-plus"></i> Add Donor Details</a>
+<a href="wills.php?did=<?php echo $did; ?>" class="menu-item is-active"><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
+<a href="saved-wills.php?did=<?php echo $did; ?>" class="menu-item"><i class="fa-regular fa-pen-to-square"></i> Saved Wills</a>
+
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
 
 		</aside>
-			
     <div class="container1">
-    <div class="title">Add Donor Details</div>
+    <div class="title">Add Donor Wills</div>
     <div class="content">
-        <form action="add-donor.php?did=<?php echo $did; ?>" method="POST" enctype="multipart/form-data">
+        <form action="add-wills.php?did=<?php echo $did; ?>" method="POST" enctype="multipart/form-data">
             <div class="user-details">
                                    <input type="hidden" name="did" value="<?php echo isset($_GET['did']) ? $_GET['did'] : ''; ?>">
 
@@ -70,19 +71,6 @@ $did = $row0['did'];
                         <input type="text" name="address" placeholder="Enter your address" required>
                     </div>
                     <div class="input-box">
-                        <span class="details">Blood Group</span>
-                        <select name="blood_group" class="styled-select">
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                        </select>
-                    </div>
-                    <div class="input-box">
                         <span class="details">Email</span>
                         <input type="text" name="email" placeholder="Enter your email" required>
                     </div>
@@ -90,23 +78,40 @@ $did = $row0['did'];
                         <span class="details">Contact Number</span>
                         <input type="text" name="phone" placeholder="Enter your phone" required>
                     </div>
-                    <div class="input-box">
-                        <span class="details">Donate Organ</span>
-                        <select name="donate_organ" class="styled-select">
-                            <option value="Heart">Heart</option>
-                            <option value="Kidney">Kidney</option>
-                            <option value="Liver">Liver</option>
-                            <option value="Lung">Lung</option>
-                            <option value="Pancreas">Pancreas</option>
-                            <option value="Small intestine">Small intestine</option>
-                            <option value="Stomach">Stomach</option>
-                            <option value="Tissue">Tissue</option>
-                        </select>
-                    </div>
-                     <div class="input-box">
-                    <span class="details">Causes of Death</span>
-                    <input type="text" name="causesofDeath" placeholder="Enter causes of death" required>
-                </div>
+					<div class="input-box">
+    <span class="details">ID</span>
+    <input type="file" name="id" id="id" required style="border: 1px solid #ccc; padding: 10px; border-radius: 4px; background-color: #f8f8f8;">
+</div>
+                    <div class="input-box gender-box" style="position: relative; top: 4px;">
+    <span class="details">Donate Organ</span>
+    <div class="category">
+        <div>
+            <label>
+                <input type="checkbox" name="donate[]" value="heart">
+                <span class="checkmark"></span>
+                <span class="gender">Heart</span>
+            </label>
+            <label>
+                <input type="checkbox" name="donate[]" value="pancreas">
+                <span class="checkmark"></span>
+                <span class="gender">Pancreas</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" name="donate[]" value="lung">
+                <span class="checkmark"></span>
+                <span class="gender">Lung</span>
+            </label>
+            <label>
+                <input type="checkbox" name="donate[]" value="kidney">
+                <span class="checkmark"></span>
+                <span class="gender">Kidney</span>
+            </label>
+        </div>
+    </div>
+</div>
+
                 <div class="input-box">
                     <span class="details">Hospital</span>
                     <select name="hid" class="styled-select">
@@ -118,18 +123,22 @@ $did = $row0['did'];
                         <?php } ?>
                     </select>
                 </div>
-                <div class="input-box gender-box" style="position: relative; top: 4px;">
-    <span class="details">Gender</span>
+				<div class="input-box">
+                    <span class="details">Signature</span>
+                    <input type="text" name="signature" placeholder="Enter the signature" required>
+                </div>
+                  <div class="input-box gender-box" style="position: relative; top: 4px;">
+    <span class="details">Organ Donation Consent</span>
     <div class="category">
         <label>
-            <input type="radio" name="gender" value="Male">
+            <input type="radio" name="consent" value="Yes">
             <span class="dot"></span>
-            <span class="gender">Male</span>
+            <span class="gender">Yes</span>
         </label>
         <label>
-            <input type="radio" name="gender" value="Female">
+            <input type="radio" name="consent" value="No">
             <span class="dot"></span>
-            <span class="gender">Female</span>
+            <span class="gender">No</span>
         </label>
     </div>
 </div>
@@ -142,7 +151,6 @@ $did = $row0['did'];
 </div>
 </div>
 </body>
-
  <script>
 		const menu_toggle = document.querySelector('.menu-toggle');
 		const sidebar = document.querySelector('.sidebar');
@@ -152,5 +160,4 @@ $did = $row0['did'];
 			sidebar.classList.toggle('is-active');
 		});
 	</script>
-
 </html>
