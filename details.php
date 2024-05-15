@@ -2,6 +2,7 @@
 session_start();
 include_once 'conx.php';
 $hid = $_SESSION['hid'];
+$result1 = mysqli_query($con, "SELECT * FROM doctor WHERE status='0'");
 
 ?>
 
@@ -39,6 +40,18 @@ $hid = $_SESSION['hid'];
 			
 			<nav class="menu">
 				<a href="details.php" class="menu-item is-active"><i class="fa-solid fa-hand-holding-medical"></i> Matching Acceptance</a>
+				<a href="appointment.php" class="menu-item"><i class="fa-regular fa-calendar-plus"></i> Appointment Times</a>
+				<a href="saved-appointment.php" class="menu-item"><i class="fa-regular fa-calendar-check"></i> Saved Appointment </a>
+				<a href="new-doctor.php" class="menu-item ">
+    <i class="fa-regular fa-bell"></i> Doctor Applications 
+    <?php
+    if (mysqli_num_rows($result1) > 0) {
+        $newRequest = mysqli_num_rows($result1);
+        echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new doctor</span>';
+    }
+    ?>
+</a>
+				<a href="doctors.php" class="menu-item"><i class="fa-solid fa-user-doctor"></i> All Saved Doctors </a>
 				<a <a href="Donor-wills.php" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills </a>
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout

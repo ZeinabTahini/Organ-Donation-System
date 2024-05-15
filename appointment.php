@@ -1,28 +1,49 @@
 <?php
 include_once 'conx.php';
 
-$did = $_GET['did']; // Get the 'did' parameter from the URL
+// Retrieve PID and DID from URL parameters
+$pid = isset($_GET['pid']) ? $_GET['pid'] : '';
+$did = isset($_GET['did']) ? $_GET['did'] : '';
 
-$result0 = mysqli_query($con, "SELECT * FROM donor WHERE did='$did'");
-$row0 = mysqli_fetch_array($result0);
-$result1 = mysqli_query($con, "SELECT * FROM appointment WHERE did='$did' and status='1'");
-$result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
+// Retrieve HID from session
+session_start();
+$hid = $_SESSION['hid'];
+
+// Fetch email and username from add_hospital table based on HID
+$sql = "SELECT email, username FROM hospital WHERE hid = '$hid'";
+$result = mysqli_query($con, $sql);
+
+// Check if query executed successfully
+if ($result) {
+    // Fetch the row
+    $row = mysqli_fetch_assoc($result);
+    
+    // Assign fetched data to variables
+    $h_email = $row['email'];
+    $h_name = $row['username'];
+} else {
+    // Handle error if query fails
+    $h_email = '';
+    $h_name = '';
+}
+$result1 = mysqli_query($con, "SELECT * FROM doctor WHERE status='0'");
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<!-- Designed by Vipul Kumar -->
+<html lang="en" dir="ltr">
 
-<head>
+  <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
-         <title> Organ Donor | Donor-Appointment </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+         <title> Organ Donor | Hospital-Appointment-Time </title>
 	  <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
         <!---Boxicons CSS-->
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="../assets/css/donor.css">
+        <link rel="stylesheet" href="../assets/css/hospital.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"
         />
 		<!-- Bootstrap core CSS-->
@@ -33,104 +54,94 @@ $result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
     </head>
 
 <body>
-    <div class="app">
-<div class="menu-toggle">
+ <div class="app">
+		<div class="menu-toggle">
 			<div class="organ">
 				<span></span>
 			</div>
 		</div>
 		<aside class="sidebar">
-			<h3>Donor</h3>
+			<h3>Hospital</h3>
 			
 			<nav class="menu">
-				<a href="donor-info.php?did=<?php echo $did; ?>" class="menu-item"><i class="fa-solid fa-person-circle-plus"></i> Add Donor Details</a>
-				<a href="message.php?did=<?php echo $did; ?>" class="menu-item">
-    <i class="fa-regular fa-message"></i> Inbox Message
-    <?php
-        if (mysqli_num_rows($result2) > 0) {
-            $newRequest = mysqli_num_rows($result2);
-            echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new message</span>';
-        }
-    ?>
-</a>
-<a href="wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
-<a href="saved-wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Saved Wills</a>
-<a href="appointment.php?did=<?php echo $did; ?>" class="menu-item is-active">
-    <i class="fa-regular fa-calendar-check"></i> Appointment Date
+				<a href="details.php" class="menu-item "><i class="fa-solid fa-hand-holding-medical"></i> Matching Acceptance</a>
+				<a href="appointment.php" class="menu-item is-active"><i class="fa-regular fa-calendar-plus"></i> Appointment Times</a>
+				<a href="saved-appointment.php" class="menu-item"><i class="fa-regular fa-calendar-check"></i> Saved Appointment </a>
+				<a href="new-doctor.php" class="menu-item ">
+    <i class="fa-regular fa-bell"></i> Doctor Applications 
     <?php
     if (mysqli_num_rows($result1) > 0) {
         $newRequest = mysqli_num_rows($result1);
-    ?>
-        <span class="badge me-1" style="background-color:#07960c;color:#fff">
-            <?php echo $newRequest; ?> new appointment
-        </span>
-    <?php
+        echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new doctor</span>';
     }
     ?>
 </a>
+				<a href="doctors.php" class="menu-item"><i class="fa-solid fa-user-doctor"></i> All Saved Doctors </a>
+				<a <a href="Donor-wills.php" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills </a>
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
 
 		</aside>
-        <div class="container">
-			 <h4>Appointment Date</h4>
-    <table class="table table-hover responsiveTable" id="example1">
-      <thead>
-        <tr>
-                                <th> H-Name </th>
-                                <th> H-Email </th>
-                                <th> PID </th>
-                                <th> DID </th>
-                                <th> Donor Name </th>
-                                <th> Patient Name </th>
-                                <th> Doctor Name </th>
-								<th> Date </th>
-                                <th> Time </th>
-                                
-                            </tr>
-      </thead>
-      <tbody>
-                            <?php 
-                            $result = mysqli_query($con, "SELECT appointment.*, donor_details.donor_name AS donor_name, donor_details.email AS donor_email, patient_details.patient_name AS patient_name, patient_details.email AS patient_email, doctor.username AS doctor_name
-                              FROM appointment 
-                              LEFT JOIN donor_details ON appointment.did = donor_details.did 
-                              LEFT JOIN patient_details ON appointment.pid = patient_details.pid 
-                              LEFT JOIN doctor ON appointment.id = doctor.id 
-                              WHERE appointment.status='1' AND appointment.did = $did");
+<div class="container1">
+    <div class="title">Add Appointment Times</div>
+    <div class="content">
+        <form action="add-appointment.php" method="POST" enctype="multipart/form-data">
+            <div class="user-details">
+			<input type="hidden" name="hid" value="<?php echo $hid; ?>">
+                <div class="input-box">
+                    <span class="details">Hospital Name</span>
+                    <input type="text" name="h_name" value="<?php echo $h_name; ?>" required>
+                </div>  
+				<div class="input-box">
+                    <span class="details">Hospital Email</span>
+                    <input type="text" name="h_email" value="<?php echo $h_email; ?>" required>
+                </div> 
+				<div class="input-box">
+                    <span class="details">Patient ID</span>
+                    <input type="text" name="pid" value="<?php echo $pid; ?>" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Donor ID</span>
+                    <input type="text" name="did" value="<?php echo $did; ?>" required>
+                </div>
 
-                            if(mysqli_num_rows($result) > 0) {
-                                while($row = mysqli_fetch_array($result)) { 
-                            ?>
-                            <tr>
-                                <td><?php echo $row['h_name']; ?></td>
-                                <td><?php echo $row['h_email']; ?></td>
-                                <td><?php echo $row['pid']; ?></td>
-                                <td><?php echo $row['did']; ?></td>
-                                <td><?php echo $row['donor_name']; ?></td>
-                                <td><?php echo $row['patient_name']; ?></td>
-								<td><?php echo $row['doctor_name']; ?></td>
-								<td><?php echo $row['date']; ?></td>
-                                <td><?php echo $row['time']; ?></td>
-                                
-                            </tr>
-                            <?php
-                                }
-                            } else {
-                            ?>
-                            <tr>
-                                <td colspan="9">NO SAVED APPOINTMENT!</td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                        </table>
+                <div class="input-box">
+                    <span class="details">Appointment Date</span>
+                    <input type="date" name="date" required>
+                </div>
+				
+                <div class="input-box">
+    <span class="details">Appointment Time</span>
+    <input type="time" name="time" required>
+</div>
+<div class="input-box">
+    <span class="details">Doctor</span>
+    <select name="id" class="styled-select">
+        <?php
+        // Fetch doctors from the doctor table where hid matches the current hospital's hid
+        $result = mysqli_query($con, "SELECT * FROM doctor WHERE hospital = '$hid'");
+        while($row = mysqli_fetch_array($result)){
+        ?>
+        <option value="<?php echo $row['id'] ?>"><?php echo $row['username'] ?></option>
+        <?php } ?>
+    </select>
+</div>
+<div class="input-box">
+    <span class="details">Additional Message</span>
+    <textarea type="message" name="message"></textarea>
+</div>
             </div>
+            <div class="button">
+                <input type="submit" name="signup" value="Submit">
+            </div>
+        </form>
     </div>
-</body>
-<!-- Bootstrap core JavaScript-->
+</div>
+</div>
+
+ <!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -151,8 +162,9 @@ $result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
         let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
 
         // basic table
-        let headers1 = ['H-Name', 'H-Email', 'PID', 'DID', 'Donor Name', 'Patient Name', 'Doctor Name', 'Date', 'Time'];
+        let headers1 = ['PID', 'DID', 'F-Name', 'D-Name', 'P-Email', 'D-Email', 'P-Phone', 'D-Phone', 'Donate Organ'];
         toResponsive('example1', headers1, headerStyle);
     })();
 </script>
+</body>
 </html>
