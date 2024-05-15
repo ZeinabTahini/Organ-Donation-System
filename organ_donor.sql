@@ -49,10 +49,12 @@ CREATE TABLE `appointment` (
   `hid` int(11) NOT NULL,
   `h_name` varchar(100) NOT NULL,
   `h_email` varchar(100) NOT NULL,
+  `id` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `did` int(11) NOT NULL,
   `time` time NOT NULL,
   `date` date NOT NULL,
+  `message` varchar(100) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -236,31 +238,7 @@ CREATE TABLE `wills` (
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `choosesorgan`
---
 
-CREATE TABLE `choosesorgan` (
-  `id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `organs`
---
-
-CREATE TABLE `organs` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(100) NOT NULL,
-  `description` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
