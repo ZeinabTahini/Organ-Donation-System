@@ -18,7 +18,7 @@
     <div class="container">
         <div class="login-left">
             <div class="login-header">
-                   <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
+                  <h1>Welcome to <a href="../index.php" style="background: linear-gradient(45deg, #131086, #b621f3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Roboto', sans-serif; text-decoration: none;">Organ Donor</a></h1>
 
             </div>
             <form class="login-form" autocomplete="off">
@@ -26,12 +26,12 @@
                     <div class="form-item">
                         <p>🎉 Congratulations 🎉<br>Your Account is created successfully!</p>
                     </div>
-                    <a href="../doctor/doctor-index.php" class="button">Back to sign-in</a>
+                    <a href="../donor/donor-index.php" class="button">Back to sign-in</a>
                 </div>
             </form>
         </div>
         <div class="login-right">
-            <img src="../assets/images/doctor.jpg" alt="image">
+            <img src="../assets/images/login-donor.jpg" alt="image">
         </div>
     </div>
 

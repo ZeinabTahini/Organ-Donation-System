@@ -5,6 +5,8 @@ $did = $_GET['did']; // Get the 'did' parameter from the URL
 
 $result0 = mysqli_query($con, "SELECT * FROM donor WHERE did='$did'");
 $row0 = mysqli_fetch_array($result0);
+$result1 = mysqli_query($con, "SELECT * FROM appointment WHERE did='$did' and status='1'");
+$result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
 
 ?>
 
@@ -42,9 +44,30 @@ $row0 = mysqli_fetch_array($result0);
 			
 			<nav class="menu">
 				<a href="donor-info.php?did=<?php echo $did; ?>" class="menu-item"><i class="fa-solid fa-person-circle-plus"></i> Add Donor Details</a>
+				<a href="message.php?did=<?php echo $did; ?>" class="menu-item">
+    <i class="fa-regular fa-message"></i> Inbox Message
+    <?php
+        if (mysqli_num_rows($result2) > 0) {
+            $newRequest = mysqli_num_rows($result2);
+            echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new message</span>';
+        }
+    ?>
+</a>
 <a href="wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
 <a href="saved-wills.php?did=<?php echo $did; ?>" class="menu-item is-active"><i class="fa-regular fa-pen-to-square"></i> Saved Wills</a>
-
+<a href="appointment.php?did=<?php echo $did; ?>" class="menu-item">
+    <i class="fa-regular fa-calendar-check"></i> Appointment Date
+    <?php
+    if (mysqli_num_rows($result1) > 0) {
+        $newRequest = mysqli_num_rows($result1);
+    ?>
+        <span class="badge me-1" style="background-color:#07960c;color:#fff">
+            <?php echo $newRequest; ?> new appointment
+        </span>
+    <?php
+    }
+    ?>
+</a>
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
