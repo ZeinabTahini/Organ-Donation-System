@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,600,0,0" />
-     <title> Organ Donor | Login-Error </title>
-	  <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
+    <title>Login Page</title>
 	<style>
 	.three {
              background: linear-gradient(45deg, #131086, #b621f3);
@@ -60,7 +58,7 @@ Please enter your email and password correctly.</p>
             </div>
         </div>
         <div class="login-right">
-            <img src="../assets/images/Donate.jpg" alt="image">
+            <img src="../assets/images/hospital.jpg" alt="image">
         </div>
     </div>
 </body>
