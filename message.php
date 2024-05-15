@@ -1,59 +1,64 @@
 <?php
 include_once 'conx.php';
-$did = $_GET['did']; // Fetching did from URL parameter
 
-// Selecting distinct messages where did matches the provided did and grouping them by pid
-$result = mysqli_query($con, "SELECT pid, username, sender, date, time FROM messages WHERE did='$did' GROUP BY pid");
-$result1 = mysqli_query($con, "SELECT * FROM appointment WHERE did='$did' and status='1'");
-$result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
+// Retrieve the pid from the URL parameter
+$pid = isset($_GET['pid']) ? $_GET['pid'] : '';
+
+$sql0 = "SELECT * FROM patient_details WHERE pid='$pid'";
+$result0 = mysqli_query($con, $sql0);
+$row0 = mysqli_fetch_array($result0);
+
+// Query to retrieve donor details for the provided patient ID
+$result = mysqli_query($con, "SELECT * FROM send WHERE pid='$pid'");
+$result1 = mysqli_query($con, "SELECT * FROM appointment WHERE pid='$pid' and status='1'");
+$result2 = mysqli_query($con, "SELECT * FROM donor_messages WHERE status='0'");
 
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
- <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- <meta name="viewport" content="width=device-width, user-scalable ="no"> -->
-         <title> Organ Donor | Donor-Message</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> Organ Donor | Patient-Messages</title>
 	  <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/fav.png" />
-        <!---Boxicons CSS-->
-        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="../assets/css/donor.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"
-        />
-		<!-- Bootstrap core CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../assets/css/patient.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- Bootstrap core CSS-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- fontawesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    </head>
+</head>
+
 <body>
-    <div class="app">
-<div class="menu-toggle">
+   <div class="app">
+		<div class="menu-toggle">
 			<div class="organ">
 				<span></span>
 			</div>
 		</div>
 		<aside class="sidebar">
-			<h3>Donor</h3>
+			<h3>Patient</h3>
 			
 			<nav class="menu">
-				<a href="donor-info.php?did=<?php echo $did; ?>" class="menu-item"><i class="fa-solid fa-person-circle-plus"></i> Add Donor Details</a>
-				<a href="message.php?did=<?php echo $did; ?>" class="menu-item is-active">
-    <i class="fa-regular fa-message"></i> Inbox Message
+				<a href="patient-info.php?pid=<?php echo $pid; ?>" class="menu-item "><i class="fa-solid fa-person-circle-plus"></i> Add Patient Details</a>
+				<a href="matching-donor.php?pid=<?php echo $pid; ?>" class="menu-item">
+				<i class='fa-solid fa-equals'></i> Matching Donor
     <?php
-        if (mysqli_num_rows($result2) > 0) {
-            $newRequest = mysqli_num_rows($result2);
-            echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new message</span>';
+        if (mysqli_num_rows($result) > 0) {
+            $newRequest = mysqli_num_rows($result);
+            echo "<span class='badge me-1' style='background-color:#07960c;color:#fff'>" . $newRequest . " new donor</span>";
         }
     ?>
+    
 </a>
-<a href="wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Donor Wills</a>
-<a href="saved-wills.php?did=<?php echo $did; ?>" class="menu-item "><i class="fa-regular fa-pen-to-square"></i> Saved Wills</a>
-<a href="appointment.php?did=<?php echo $did; ?>" class="menu-item">
+				<a href="message.php?pid=<?php echo $pid; ?>" class="menu-item is-active"><i class="fa-regular fa-message"></i> Inbox Message</a>
+				<a href="appointment.php?pid=<?php echo $pid; ?>" class="menu-item">
     <i class="fa-regular fa-calendar-check"></i> Appointment Date
     <?php
     if (mysqli_num_rows($result1) > 0) {
@@ -66,53 +71,68 @@ $result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
     }
     ?>
 </a>
-
-
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
 			</nav>
-
 		</aside>
         <div class="container">
-            <h4>Conversations</h4>
-            <table class="table table-hover responsiveTable" id="example1">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Sender</th>
-                        <th>Conversation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                     <?php 
-    if(mysqli_num_rows($result) > 0){
-        while($row = mysqli_fetch_array($result)){
+    <h4>Conversations</h4> 
+    <?php
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_array($result)) {
+            // Retrieve the donor ID for each donor record
+            $did = $row['did'];
+            // Query to get donor details based on the donor ID
+            $result1 = mysqli_query($con, "SELECT * FROM send WHERE did='$did'");
+            if ($row1 = mysqli_fetch_array($result1)) {
     ?>
     <tr>
-        <td><?php echo $row['username']; ?></td>
-        <td><?php echo $row['sender']; ?></td>
-        <td><a href="conversation.php?did=<?php echo $did; ?>&pid=<?php echo $row['pid']; ?>"><i class="fa-solid fa-message"></i></a></td>
-    </tr>
+    <table class="table table-hover responsiveTable" id="example1">
+        <thead>
+            <tr>
+                <th>Donor Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Blood Group</th>
+                <th>Donate Organ</th>
+                <th>Conversation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo $row1['donor_name']; ?></td>
+                <td><?php echo $row1['age']; ?></td>
+                <td><?php echo $row1['gender']; ?></td>
+                <td><?php echo $row1['address']; ?></td>
+                <td><?php echo $row1['blood_group']; ?></td>
+                <td><?php echo $row1['donate_organ']; ?></td>
+				<td><a href="conversation.php?pid=<?php echo $pid; ?>&did=<?php echo $row['did']; ?>"><i class="fa-solid fa-message"></i></a></td>
+
+            </tr>
+        </tbody>
+    </table>
     <?php
         }
+    } 
     } else {
     ?>
     <tr>
-        <td colspan="3">NO MESSAGES!</td>
+        <td colspan="7">NO MESSAGES!</td>
     </tr>
     <?php
     }
     ?>
-                </tbody>
-            </table>
+</div>
+
         </div>
-    </div>
-</body>
-<!-- Bootstrap core JavaScript-->
+    </body>
+   <!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 <script src="../assets/js/admin.js"></script> 
 <script type="text/javascript">
     // Toggle menu functionality
@@ -129,8 +149,8 @@ $result2 = mysqli_query($con, "SELECT * FROM messages WHERE status='0'");
         let headerStyle = 'font-weight: 700; background-color: #ededed; color: #212529';
 
         // basic table
-        let headers1 = ['Username', 'Sender', 'Conversation'];
+        let headers1 = ['Donor Name', 'Age', 'Gender', 'Address', 'Blood Group', 'Donate Organ', 'Conversation'];
         toResponsive('example1', headers1, headerStyle);
     })();
 </script>
-</html>
+    </html>

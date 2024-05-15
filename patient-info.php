@@ -9,6 +9,8 @@ $sql0 = "SELECT * FROM patient WHERE pid='$pid'";
 $result0 = mysqli_query($con, $sql0);
 $row0 = mysqli_fetch_array($result0);
 $result = mysqli_query($con, "SELECT * FROM send WHERE pid='$pid' and status='0'");
+$result1 = mysqli_query($con, "SELECT * FROM appointment WHERE pid='$pid' and status='1'");
+$result2 = mysqli_query($con, "SELECT * FROM donor_messages WHERE status='0'");
 
 ?>
 
@@ -50,7 +52,28 @@ $result = mysqli_query($con, "SELECT * FROM send WHERE pid='$pid' and status='0'
     ?>
     
 </a>
-
+				<a href="message.php?pid=<?php echo $pid; ?>" class="menu-item">
+    <i class="fa-regular fa-message"></i> Inbox Message
+    <?php
+        if (mysqli_num_rows($result2) > 0) {
+            $newRequest = mysqli_num_rows($result2);
+            echo '<span class="badge me-1" style="background-color:#07960c;color:#fff;">' . $newRequest . ' new message</span>';
+        }
+    ?>
+</a>
+<a href="appointment.php?pid=<?php echo $pid; ?>" class="menu-item">
+    <i class="fa-regular fa-calendar-check"></i> Appointment Date
+    <?php
+    if (mysqli_num_rows($result1) > 0) {
+        $newRequest = mysqli_num_rows($result1);
+    ?>
+        <span class="badge me-1" style="background-color:#07960c;color:#fff">
+            <?php echo $newRequest; ?> new appointment
+        </span>
+    <?php
+    }
+    ?>
+</a>
 				<a href="../index.php" class="menu-item">
   <i class="bx bx-log-out icons"></i> Logout
 </a>
